@@ -271,14 +271,14 @@ export default function Home() {
             <a
               href="https://discord.gg/ukXSHFprKc"
               target="blank_"
-              className="btn rounded-md join-item"
+              className="btn join-item"
             >
               <Discord /> Discord
             </a>
             <a
               href="https://github.com/YoshiCrystal9/FortPatcher-NX"
               target="blank_"
-              className="btn rounded-md join-item"
+              className="btn join-item"
             >
               <Github /> Github
             </a>
@@ -398,14 +398,14 @@ export default function Home() {
                   <a
                     href="https://github.com/iminthebibleson/fortpatcher_updater/releases/download/1.2.0/Fortpatcher_1_2_0.nro"
                     target="blank_"
-                    className="btn rounded-md join-item"
+                    className="btn join-item"
                   >
                     <Download /> Download
                   </a>
                   <a
                     href="https://github.com/iminthebibleson/fortpatcher_updater"
                     target="blank_"
-                    className="btn rounded-md join-item"
+                    className="btn join-item"
                   >
                     <Github /> Github
                   </a>
