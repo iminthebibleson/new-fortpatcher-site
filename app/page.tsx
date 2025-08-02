@@ -562,7 +562,7 @@ export default function Home() {
 
         </div>
 
-        <footer className="footer sm:footer-horizontal footer-center mt-4 p-4 m-auto w-[98%] mt-2 bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md rounded-lg">
+        <footer className="footer sm:footer-horizontal footer-center my-4 p-4 m-auto w-[98%] mt-2 bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md rounded-lg">
           <aside>
             <p className="flex justify-between space-x-5">All rights reserved by Myself <img src={'/clown.gif'} className="ml-auto w-5 h-5 mx-2" /> | By Iminthebibleson</p>
           </aside>
