@@ -208,10 +208,15 @@ export default function Home() {
           </div>
           <div className="navbar-center"></div>
           <div className="navbar-end">
-            {/* Open the modal using document.getElementById('ID').showModal() method */}
             <button
               className="btn btn-ghost rounded-md"
-              onClick={() => document.getElementById("my_modal_1").showModal()}
+              onClick={() => {
+                const modal = document.getElementById("my_modal_1");
+                if (modal) {
+                  (modal as HTMLDialogElement).showModal();
+                }
+              }}
+
             >
               <Grip className="stroke-current" />
             </button>
@@ -260,13 +265,13 @@ export default function Home() {
                       Hyper Links
                     </div>
                     <div className="join join-vertical">
-                    <a className="btn btn-primary join-item" href="#AboutPage">About Page</a>
-                    <a className="btn btn-primary join-item" href="#FortPatcherReleases">FortPatcher Releases</a>
-                    <a className="btn btn-primary join-item" href="#FortPatcherUpdater">FortPatcher Updater</a>
-                    <a className="btn btn-primary join-item" href="#FPSMod">IzTendo Mod</a>
-                    <a className="btn btn-primary join-item" href="#FAQ">FAQ's</a>
+                      <a className="btn btn-primary join-item" href="#AboutPage">About Page</a>
+                      <a className="btn btn-primary join-item" href="#FortPatcherReleases">FortPatcher Releases</a>
+                      <a className="btn btn-primary join-item" href="#FortPatcherUpdater">FortPatcher Updater</a>
+                      <a className="btn btn-primary join-item" href="#FPSMod">IzTendo Mod</a>
+                      <a className="btn btn-primary join-item" href="#FAQ">FAQ's</a>
                     </div>
-                    
+
 
                   </div>
                   <div className="p-4 bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-sm rounded-lg col-span-2 row-span-2 col-start-1 row-start-4 flex flex-col items-center justify-center">
