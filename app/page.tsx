@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import { ChevronsDown } from "./components/ChevronsDown";
 import { Download } from "./components/Download";
 import { Grip } from "./components/Grip";
 import { WandSparkles } from "./components/WandSparkles";
@@ -14,7 +12,6 @@ import { Github } from "./components/Github";
 import { LeftArrow } from "./components/LeftArrow"
 import { BadgeAlert } from "./components/BadgeAlert"
 import { RightArrow } from "./components/RightArrow"
-import { p } from "framer-motion/client";
 
 interface Release {
   id: number;
@@ -36,7 +33,6 @@ interface Release {
 }
 
 export default function Home() {
-  const [showRotateMessage, setShowRotateMessage] = useState(false);
   const [version, setVersion] = useState<string | null>(null);
   const [buildDate, setBuildDate] = useState<string | null>(null);
   const [releases, setReleases] = useState<Release[]>([]);
@@ -116,25 +112,6 @@ export default function Home() {
     fetchFortniteVersion();
   }, []);
 
-  // Check orientation on resize/orientationchange
-  useEffect(() => {
-    function checkOrientation() {
-      const isMobile = window.matchMedia("(max-width: 768px)").matches;
-      const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-      setShowRotateMessage(isMobile && isPortrait);
-    }
-
-    checkOrientation();
-
-    window.addEventListener("resize", checkOrientation);
-    window.addEventListener("orientationchange", checkOrientation);
-
-    return () => {
-      window.removeEventListener("resize", checkOrientation);
-      window.removeEventListener("orientationchange", checkOrientation);
-    };
-  }, []);
-
   // Utility function for time ago
   function timeSince(dateString: string) {
     const now = new Date();
@@ -174,19 +151,8 @@ export default function Home() {
 
   return (
     <>
-      {showRotateMessage && (
-        <div className="fixed inset-0 text-white z-[9999] flex flex-col justify-center items-center text-center p-5 text-lg font-bold bg-gray-500/30 bg-clip-padding backdrop-filter  backdrop-blur bg-opacity-10 backdrop-saturate-100 backdrop-contrast-100 bg-[url('data:image/svg+xml;base64,CiAgICAgIDxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxuczpzdmdqcz0iaHR0cDovL3N2Z2pzLmRldi9zdmdqcyIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBvcGFjaXR5PSIxIj4KICAgICAgICA8ZGVmcz4KICAgICAgICAgIDxmaWx0ZXIgaWQ9Im5ubm9pc2UtZmlsdGVyIiB4PSItMjAlIiB5PSItMjAlIiB3aWR0aD0iMTQwJSIgaGVpZ2h0PSIxNDAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHByaW1pdGl2ZVVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJsaW5lYXJSR0IiPgogICAgICAgICAgICA8ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC4xOCIgbnVtT2N0YXZlcz0iNCIgc2VlZD0iMTUiIHN0aXRjaFRpbGVzPSJzdGl0Y2giIHg9IjAlIiB5PSIwJSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgcmVzdWx0PSJ0dXJidWxlbmNlIj48L2ZlVHVyYnVsZW5jZT4KICAgICAgICAgICAgPGZlU3BlY3VsYXJMaWdodGluZyBzdXJmYWNlU2NhbGU9IjQwIiBzcGVjdWxhckNvbnN0YW50PSIwLjciIHNwZWN1bGFyRXhwb25lbnQ9IjIwIiBsaWdodGluZy1jb2xvcj0iIzc5NTdBOCIgeD0iMCUiIHk9IjAlIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBpbj0idHVyYnVsZW5jZSIgcmVzdWx0PSJzcGVjdWxhckxpZ2h0aW5nIj4KICAgICAgICAgICAgICA8ZmVEaXN0YW50TGlnaHQgYXppbXV0aD0iMyIgZWxldmF0aW9uPSIxMDAiPjwvZmVEaXN0YW50TGlnaHQ+CiAgICAgICAgICAgIDwvZmVTcGVjdWxhckxpZ2h0aW5nPgogICAgICAgICAgICA8ZmVDb2xvck1hdHJpeCB0eXBlPSJzYXR1cmF0ZSIgdmFsdWVzPSIwIiB4PSIwJSIgeT0iMCUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGluPSJzcGVjdWxhckxpZ2h0aW5nIiByZXN1bHQ9ImNvbG9ybWF0cml4Ij48L2ZlQ29sb3JNYXRyaXg+CiAgICAgICAgICA8L2ZpbHRlcj4KICAgICAgICA8L2RlZnM+CiAgICAgICAgPHJlY3Qgd2lkdGg9IjcwMCIgaGVpZ2h0PSI3MDAiIGZpbGw9InRyYW5zcGFyZW50Ij48L3JlY3Q+CiAgICAgICAgPHJlY3Qgd2lkdGg9IjcwMCIgaGVpZ2h0PSI3MDAiIGZpbGw9IiM3OTU3YTgiIGZpbHRlcj0idXJsKCNubm5vaXNlLWZpbHRlcikiPjwvcmVjdD4KICAgICAgPC9zdmc+CiAgICA=')] bg-blend-overlay">
-          Please rotate your phone to landscape mode for the best experience.
-        </div>
-      )}
-
-      <div
-        style={{
-          filter: showRotateMessage ? "blur(5px)" : "none",
-          pointerEvents: showRotateMessage ? "none" : "auto",
-        }}
-      >
-        <div className="navbar p-4 m-auto lg:w-4/5 w-5/6 mt-2 bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md rounded-lg">
+      <div>
+        <div className="navbar p-4 m-auto w-[98%] mt-2 bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md rounded-lg">
           <div className="navbar-start space-x-2">
             <svg
               version="1.0"
@@ -222,7 +188,6 @@ export default function Home() {
             </button>
             <dialog id="my_modal_1" className="modal">
               <div className="modal-box w-11/12 max-w-5xl bg-gray-500/30 bg-clip-padding backdrop-filter  backdrop-blur bg-opacity-10 backdrop-saturate-100 backdrop-contrast-100 bg-[url('data:image/svg+xml;base64,CiAgICAgIDxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxuczpzdmdqcz0iaHR0cDovL3N2Z2pzLmRldi9zdmdqcyIgdmlld0JveD0iMCAwIDcwMCA3MDAiIHdpZHRoPSI3MDAiIGhlaWdodD0iNzAwIiBvcGFjaXR5PSIxIj4KICAgICAgICA8ZGVmcz4KICAgICAgICAgIDxmaWx0ZXIgaWQ9Im5ubm9pc2UtZmlsdGVyIiB4PSItMjAlIiB5PSItMjAlIiB3aWR0aD0iMTQwJSIgaGVpZ2h0PSIxNDAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHByaW1pdGl2ZVVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJsaW5lYXJSR0IiPgogICAgICAgICAgICA8ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC4xOCIgbnVtT2N0YXZlcz0iNCIgc2VlZD0iMTUiIHN0aXRjaFRpbGVzPSJzdGl0Y2giIHg9IjAlIiB5PSIwJSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgcmVzdWx0PSJ0dXJidWxlbmNlIj48L2ZlVHVyYnVsZW5jZT4KICAgICAgICAgICAgPGZlU3BlY3VsYXJMaWdodGluZyBzdXJmYWNlU2NhbGU9IjQwIiBzcGVjdWxhckNvbnN0YW50PSIwLjciIHNwZWN1bGFyRXhwb25lbnQ9IjIwIiBsaWdodGluZy1jb2xvcj0iIzc5NTdBOCIgeD0iMCUiIHk9IjAlIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBpbj0idHVyYnVsZW5jZSIgcmVzdWx0PSJzcGVjdWxhckxpZ2h0aW5nIj4KICAgICAgICAgICAgICA8ZmVEaXN0YW50TGlnaHQgYXppbXV0aD0iMyIgZWxldmF0aW9uPSIxMDAiPjwvZmVEaXN0YW50TGlnaHQ+CiAgICAgICAgICAgIDwvZmVTcGVjdWxhckxpZ2h0aW5nPgogICAgICAgICAgICA8ZmVDb2xvck1hdHJpeCB0eXBlPSJzYXR1cmF0ZSIgdmFsdWVzPSIwIiB4PSIwJSIgeT0iMCUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGluPSJzcGVjdWxhckxpZ2h0aW5nIiByZXN1bHQ9ImNvbG9ybWF0cml4Ij48L2ZlQ29sb3JNYXRyaXg+CiAgICAgICAgICA8L2ZpbHRlcj4KICAgICAgICA8L2RlZnM+CiAgICAgICAgPHJlY3Qgd2lkdGg9IjcwMCIgaGVpZ2h0PSI3MDAiIGZpbGw9InRyYW5zcGFyZW50Ij48L3JlY3Q+CiAgICAgICAgPHJlY3Qgd2lkdGg9IjcwMCIgaGVpZ2h0PSI3MDAiIGZpbGw9IiM3OTU3YTgiIGZpbHRlcj0idXJsKCNubm5vaXNlLWZpbHRlcikiPjwvcmVjdD4KICAgICAgPC9zdmc+CiAgICA=')] bg-blend-overlay">
-                <div className="divider my-0 text-lg px-2">Menu</div>
 
                 <div className="grid grid-cols-4 grid-rows-5 gap-4">
                   <div className="p-4 bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-sm rounded-lg col-span-2 row-span-3 flex flex-col items-center justify-center">
@@ -295,17 +260,14 @@ export default function Home() {
         <div
           style={{ zIndex: 1 }}
           id="AboutPage"
-          className="mt-4 p-4 m-auto lg:w-2/3 w-5/6 bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md flex flex-col items-center"
+          className="mt-4 p-4 m-auto w-[95%] bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md flex flex-col items-center"
         >
           <h1 className="text-3xl font-bold">About the FortPatcher_NX</h1>
-          <div className="divider">
-            <Flame className="w-10 stroke-current" />
-          </div>
-          <p className="text-center pb-6">
+          <p className="text-center">
             Play the new versions of Fortnite even when banned on the Nintendo Switch!<br />(Note: Owner is not responsible for any console bans from Epic Games from these patches. But there are currently never has been a ban from using the patches or mods!)
           </p>
 
-          <div className="join join-vertical lg:join-horizontal">
+          <div className="join join-horizontal">
             <a
               href="https://discord.gg/ukXSHFprKc"
               target="blank_"
@@ -323,16 +285,7 @@ export default function Home() {
           </div>
 
           <div
-            className="stats bg-base-100 transform my-2 shadow-lg"
-            style={{
-              backgroundImage: `
-      radial-gradient(at 43% 85%, var(--color-primary) 0%, transparent 60%),
-      radial-gradient(at 41% 87%, var(--color-primary-content) 0%, transparent 50%),
-      radial-gradient(at 19% 31%, var(--color-secondary) 0%, transparent 40%),
-      radial-gradient(at 11% 78%, var(--color-secondary-content) 0%, transparent 30%)
-    `,
-            }}
-          >
+            className="stats bg-base-100 transform my-2 shadow-lg text-center">
             <div className="stat">
               <div className="stat-title font-medium">
                 Current Switch Version Fortnite
@@ -363,14 +316,10 @@ export default function Home() {
         <div
           style={{ zIndex: 1 }}
           id="FortPatcherReleases"
-          className="mt-4 p-4 m-auto lg:w-2/3 w-5/6 bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md flex flex-col items-center"
+          className="mt-4 p-4 m-auto w-[95%] bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md flex flex-col items-center"
         >
 
           <h1 className="text-3xl font-bold">FortPatcher-NX Releases</h1>
-          <div className="divider">
-            <Flame className="w-10 stroke-current" />
-          </div>
-
           <div className="overflow-x-auto">
             <table className="w-full table-auto rounded-lg border-collapse border" >
               <thead>
@@ -436,22 +385,16 @@ export default function Home() {
         <div
           style={{ zIndex: 1 }}
           id="FortPatcherUpdater"
-          className="mt-4 p-4 m-auto lg:w-2/3 w-5/6 bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md flex flex-col items-center"
+          className="mt-4 p-4 m-auto w-[95%] bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md flex flex-col items-center"
         >
 
-          <div className="card bg-base-100 image-full w-full shadow-sm">
-            <figure>
-              <img
-                src="/FortPatcherUpdaterShowCase.jpg"
-                alt="Shoes" />
-            </figure>
-            <div className="hero-content text-center">
-              <div className="max-w-md">
+            <div className="hero-content mx-auto text-center">
+              <div className="w-full">
                 <h1 className="text-3xl font-bold">Want a quicker way to download the latest patches?</h1>
                 <p className="py-6">
                   This simple homebrew app I've created makes it so that there isn't any need for a PC to download the patches!
                 </p>
-                <div className="join join-vertical lg:join-horizontal">
+                <div className="join join-horizontal">
                   <a
                     href="https://github.com/iminthebibleson/fortpatcher_updater/releases/download/1.2.0/Fortpatcher_1_2_0.nro"
                     target="blank_"
@@ -470,7 +413,6 @@ export default function Home() {
 
               </div>
             </div>
-          </div>
 
 
         </div>
@@ -478,45 +420,29 @@ export default function Home() {
         <div
           style={{ zIndex: 1 }}
           id="FPSMod"
-          className="mt-4 p-4 m-auto lg:w-2/3 w-5/6 bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md flex flex-col items-center"
+          className="mt-4 p-4 m-auto w-[95%] bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md flex flex-col items-center"
         >
 
 
-          <div className="mockup-browser border border-base-300 w-full">
             <div className="mockup-browser-toolbar">
               <a href="https://github.com/IzTendo/NSW-FortnitePerformanceMod" target="blank_" className="input w-fit">https://github.com/IzTendo/NSW-FortnitePerformanceMod</a>
             </div>
-            <div className="flex flex-col items-center h-80 w-full"><div>IzTendo's Proformance Mod | <span className="font-light ">V. {release.tag_name}</span></div>
+            <div className="flex flex-col items-center h-fit w-full"><div>IzTendo's Proformance Mod | <span className="font-light ">V. {release.tag_name}</span></div>
 
               <h1 className="text-2xl font-bold mb-2 text-left">Latest Release</h1>
               <div><strong>Published:</strong> {timeSince(release.published_at)}</div>
 
-              <div className="card bg-base-100 image-full w-96 shadow-sm">
-                <figure>
-                  <img
-                    src="/ShowCase.webp"
-                    alt="Shoes" />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Release Notes</h2>
-                  <p>{release.body || "No notes available."}</p>
-                  <div className="card-actions justify-end">
-                    {zipAsset && (
+              {zipAsset && (
                       <a
                         href={zipAsset.browser_download_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn btn-ghost rounded-md btn-primary"
+                        className="btn rounded-md btn-primary my-4"
                       >
-                        Download Latest
+                        <Download /> Download Latest
                       </a>
                     )}
-                  </div>
-                </div>
-              </div>
-
             </div>
-          </div>
 
         </div>
 
@@ -524,7 +450,7 @@ export default function Home() {
         <div
           style={{ zIndex: 1 }}
           id="FAQ"
-          className="mt-4 p-4 m-auto lg:w-2/3 w-5/6 bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md flex flex-col items-center"
+          className="mt-4 p-4 m-auto w-[95%] bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md flex flex-col items-center"
         >
 
           <h2 className="text-2xl text-center font-semibold mb-4">FAQ</h2>
@@ -584,7 +510,7 @@ export default function Home() {
             <input type="checkbox" name="my-accordion-2" />
             <div className="collapse-title font-semibold flex"><BadgeAlert /> | Are there mods for Fortnite?</div>
             <div className="collapse-content text-sm">
-              Yes! There are mods for fortnite but mainly for proformance. You can find them in there discord server!
+              Yes! There are mods for fortnite but mainly for performance. You can find them in there discord server!
               <a href="https://discord.com/channels/939722946853875722/1121480338699452486" target="_blank"
                 className="link link-primary">Link to Mods Channel</a>
             </div>
@@ -593,7 +519,7 @@ export default function Home() {
             <input type="checkbox" name="my-accordion-2" />
             <div className="collapse-title font-semibold flex"><BadgeAlert /> | What are the Supported Versions?</div>
             <div className="collapse-content text-sm">
-              If the verison your looking
+              If the version your looking
               for is not here then that means you would have a build your own!
               <table className="w-full table-auto rounded border-collapse border">
                 <thead>
@@ -636,12 +562,10 @@ export default function Home() {
 
         </div>
 
-        <footer className="footer sm:footer-horizontal footer-center mt-4 p-4 m-auto lg:w-4/5 w-5/6 mt-2 bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md rounded-lg">
+        <footer className="footer sm:footer-horizontal footer-center mt-4 p-4 m-auto w-[98%] mt-2 bg-gray-900/30 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md shadow-md rounded-lg">
           <aside>
-            <p className="flex justify-between space-x-5">
-              Copyright &copy; {new Date().getFullYear()} - All rights reserved by Myself
-              <img src={'/clown.gif'} className="ml-auto w-5" /> | By Iminthebibleson
-            </p>          </aside>
+            <p className="flex justify-between space-x-5">All rights reserved by Myself <img src={'/clown.gif'} className="ml-auto w-5 h-5 mx-2" /> | By Iminthebibleson</p>
+          </aside>
         </footer>
       </div>
     </>
