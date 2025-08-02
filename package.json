@@ -10,6 +10,7 @@
     "tailwind": "npx @tailwindcss/cli -i ./app/input.css -o ./app/globals.css"
   },
   "dependencies": {
+    "@motionone/easing": "^10.18.0",
     "@tailwindcss/cli": "^4.1.11",
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.536.0",
