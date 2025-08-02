@@ -1,23 +1,20 @@
 "use client";
 
-import type { Variants } from "motion/react";
-import { motion, useAnimation } from "motion/react";
+import { motion, useAnimation, SVGMotionProps } from "motion/react";
 import { useEffect } from "react";
 
-interface ArrowProps extends React.SVGAttributes<SVGSVGElement> {
+type ArrowProps = Omit<SVGMotionProps<SVGSVGElement>, "onAnimationStart"> & {
   width?: number;
   height?: number;
   strokeWidth?: number;
   stroke?: string;
-}
+};
 
-const pathVariants: Variants = {
+const pathVariants = {
   initial: {
     pathLength: 0,
     opacity: 0,
-    transition: {
-      duration: 0.4,
-    },
+    transition: { duration: 0.4 },
   },
   draw: {
     pathLength: [0, 1],
@@ -40,7 +37,6 @@ const RightArrow = ({
 
   useEffect(() => {
     let isMounted = true;
-
     async function loop() {
       while (isMounted) {
         await controls.start("draw");
@@ -49,9 +45,7 @@ const RightArrow = ({
         await new Promise((res) => setTimeout(res, 2000));
       }
     }
-
     loop();
-
     return () => {
       isMounted = false;
       controls.stop();
