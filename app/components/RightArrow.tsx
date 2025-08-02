@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useAnimation, SVGMotionProps } from "motion/react";
-import { easeInOut } from "@motionone/easing"; // ← Add this import
 import { useEffect } from "react";
 
 type ArrowProps = Omit<SVGMotionProps<SVGSVGElement>, "onAnimationStart"> & {
@@ -22,7 +21,7 @@ const pathVariants = {
     opacity: [0, 1],
     transition: {
       duration: 1.5,
-      ease: easeInOut, // ← Use the easing function
+      ease: "easeInOut" as any,  // Cast here to avoid type error
     },
   },
 };
