@@ -1,10 +1,9 @@
 "use client";
 
-import type { Variants } from "motion/react";
-import { motion, useAnimation } from "motion/react";
+import { motion, useAnimation, type Variants, type SVGMotionProps } from "framer-motion";
 import { useEffect } from "react";
 
-interface IconProps extends React.SVGAttributes<SVGSVGElement> {
+interface IconProps extends SVGMotionProps<SVGSVGElement> {
   width?: number;
   height?: number;
   strokeWidth?: number;
